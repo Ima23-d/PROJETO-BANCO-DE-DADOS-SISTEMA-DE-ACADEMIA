@@ -1,7 +1,7 @@
 # =========================
 # CONEXÂO AO DATABASE
 # =========================
-
+# DECORATO
 import psycopg2
 import os 
 from dotenv import load_dotenv
@@ -21,4 +21,5 @@ def conectar():
         print("Conectado ao banco de dados")
         return conn 
     except Exception as e:
+
         print(f"Erro ao se conectar {e}")
