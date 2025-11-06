@@ -16,7 +16,13 @@ def menu_principal():
         print("1 - Aluno")
         print("2 - Personal")
         print("3 - Sair")
-        opcao = input("Escolha: ").strip()
+
+        try:
+            opcao = int(input("Escolha: "))
+        except ValueError as e:
+            print(f"\nValor inválido! Digite um número entre 1 e 3. ({e})")
+            input("Pressione ENTER para continuar...")
+            continue 
 
         if opcao == "1":
             menu_aluno_principal()
