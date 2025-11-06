@@ -22,7 +22,7 @@ def ver_treinos_aluno(id_aluno):
     """
     treinos = executar_query(query, (id_aluno,), fetch=True)
     if treinos is None:
-        print("❌ Erro ao buscar treinos (verifique o banco).")
+        print("Erro ao buscar treinos (verifique o banco).")
     elif not treinos:
         print("Nenhum treino registrado.")
     else:
@@ -36,11 +36,19 @@ def menu_aluno(id_aluno):
         print("--- MENU DO ALUNO ---")
         print("1 - Ver Treinos")
         print("2 - Voltar")
-        opcao = input("Escolha: ").strip()
+        
+        try:
+            opcao = int(input("Escolha: "))
+        except ValueError as e:
+            print(f"\nValor inválido! Digite um número entre 1 e 3. ({e})")
+            input("Pressione ENTER para continuar...")
+            continue 
 
         if opcao == "1":
             ver_treinos_aluno(id_aluno)
         elif opcao == "2":
+            print("\nVoltando ao menu anterior...")
+            input("Pressione ENTER para continuar...")
             break
         else:
             print("Opção inválida.")
@@ -53,13 +61,22 @@ def menu_aluno_principal():
         print("1 - Cadastrar")
         print("2 - Login")
         print("3 - Voltar")
-        opcao = input("Escolha: ").strip()
+
+        try:
+            opcao = int(input("Escolha: "))
+            return opcao
+        except ValueError as e:
+            print(f"\nValor inválido! Digite um número entre 1 e 3. ({e})")
+            input("Pressione ENTER para continuar...")
+            continue 
 
         if opcao == "1":
             cadastrar_aluno()
         elif opcao == "2":
             login_aluno()
         elif opcao == "3":
+            print("\nVoltando ao menu anterior...")
+            input("Pressione ENTER para continuar...")
             break
         else:
             print("Opção inválida.")
