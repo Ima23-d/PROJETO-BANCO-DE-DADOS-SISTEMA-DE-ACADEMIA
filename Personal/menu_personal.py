@@ -56,11 +56,18 @@ def cadastrar_treino():
 def ver_treinos_alunos_personal():
     limpar_tela()
     query = """
-    SELECT a.Nome_Aluno, t.Especificacoes, i.Nome
-    FROM Treinos t
-    JOIN Instrutores i ON t.ID_Instrutor = i.ID_Instrutor
-    JOIN Treinos_alunos ta ON t.ID_Treinos = ta.ID_Treinos
-    JOIN Alunos a ON a.ID_Aluno = ta.ID_Aluno
+    SELECT 
+    alunos.nome_aluno,
+    treinos.especificacoes,
+    instrutores.nome AS nome_instrutor
+FROM treinos
+JOIN instrutores 
+    ON treinos.id_instrutor = instrutores.id_instrutor
+JOIN treinos_alunos 
+    ON treinos.id_treinos = treinos_alunos.id_treinos
+JOIN alunos 
+    ON alunos.id_aluno = treinos_alunos.id_aluno;
+
     """
     resultados = executar_query(query, fetch=True)
     if resultados is None:
@@ -127,4 +134,5 @@ def menu_personal_principal():
             break
         else:
             print("Opção inválida.")
+
             input("Pressione ENTER para continuar...")
