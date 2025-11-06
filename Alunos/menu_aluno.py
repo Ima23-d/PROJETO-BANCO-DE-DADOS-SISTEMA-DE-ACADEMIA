@@ -14,11 +14,17 @@ def ver_treinos_aluno(id_aluno):
     limpar_tela()
     print("--- SEUS TREINOS ---")
     query = """
-    SELECT t.ID_Treinos, t.Especificacoes, i.Nome
-    FROM Treinos t
-    JOIN Instrutores i ON t.ID_Instrutor = i.ID_Instrutor
-    JOIN Treinos_alunos ta ON t.ID_Treinos = ta.ID_Treinos
-    WHERE ta.ID_Aluno = %s
+    SELECT 
+    treinos.id_treinos,
+    treinos.especificacoes,
+    instrutores.nome AS nome_instrutor
+FROM treinos
+JOIN instrutores 
+    ON treinos.id_instrutor = instrutores.id_instrutor
+JOIN treinos_alunos 
+    ON treinos.id_treinos = treinos_alunos.id_treinos
+WHERE treinos_alunos.id_aluno = %s;
+
     """
     treinos = executar_query(query, (id_aluno,), fetch=True)
     if treinos is None:
@@ -79,4 +85,5 @@ def menu_aluno_principal():
             break  # sai do loop e volta ao menu principal
         else:
             print("Opção inválida.")
+
             input("Pressione ENTER para continuar...")
