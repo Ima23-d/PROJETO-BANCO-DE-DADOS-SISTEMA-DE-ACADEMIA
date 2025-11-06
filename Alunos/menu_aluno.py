@@ -36,7 +36,7 @@ def menu_aluno(id_aluno):
         print("--- MENU DO ALUNO ---")
         print("1 - Ver Treinos")
         print("2 - Voltar")
-        
+
         try:
             opcao = int(input("Escolha: "))
         except ValueError as e:
@@ -64,20 +64,19 @@ def menu_aluno_principal():
 
         try:
             opcao = int(input("Escolha: "))
-            return opcao
         except ValueError as e:
             print(f"\nValor inválido! Digite um número entre 1 e 3. ({e})")
             input("Pressione ENTER para continuar...")
-            continue 
+            continue  
 
-        if opcao == "1":
+        if opcao == 1:
             cadastrar_aluno()
-        elif opcao == "2":
+        elif opcao == 2:
             login_aluno()
-        elif opcao == "3":
+        elif opcao == 3:
             print("\nVoltando ao menu anterior...")
             input("Pressione ENTER para continuar...")
-            break
+            break  # sai do loop e volta ao menu principal
         else:
             print("Opção inválida.")
             input("Pressione ENTER para continuar...")

@@ -88,13 +88,13 @@ def menu_personal(id_personal):
             input("Pressione ENTER para continuar...")
             continue 
 
-        if opcao == "1":
+        if opcao == 1:
             ver_alunos_personal()
-        elif opcao == "2":
+        elif opcao == 2:
             cadastrar_treino()
-        elif opcao == "3":
+        elif opcao == 3:
             ver_treinos_alunos_personal()
-        elif opcao == "4":
+        elif opcao == 4:
             print("\nVoltando ao menu anterior...")
             input("Pressione ENTER para continuar...")
             break
@@ -117,11 +117,11 @@ def menu_personal_principal():
             input("Pressione ENTER para continuar...")
             continue 
 
-        if opcao == "1":
+        if opcao == 1:
             cadastrar_personal()
-        elif opcao == "2":
+        elif opcao == 2:
             login_personal()
-        elif opcao == "3":
+        elif opcao == 3:
             print("\nVoltando ao menu anterior...")
             input("Pressione ENTER para continuar...")
             break

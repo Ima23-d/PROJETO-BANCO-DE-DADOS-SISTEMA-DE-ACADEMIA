@@ -1,5 +1,5 @@
 # =========================
-# CADASTRO E LOGIN DO ALUNO
+# CADASTRO E LOGIN DO ALUNO (versão segura)
 # =========================
 
 import os
@@ -59,11 +59,11 @@ def cadastrar_aluno():
         return
 
     query = """
-        INSERT INTO Alunos
-        (Nome_Aluno, CPF, Data_Nascimento, Idade, Peso, Gordura_Corporal,
-         Nivel, Deficiencia, Email, Sexo, Senha)
+        INSERT INTO alunos
+        (nome_aluno, cpf, data_nascimento, idade, peso, gordura_corporal,
+        nivel, deficiencia, email, sexo, senha)
         VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)
-        RETURNING ID_Aluno
+        RETURNING id_aluno
     """
 
     res = executar_query(
@@ -88,8 +88,8 @@ def login_aluno():
     except Exception as e:
         print("Digite um valor valido {e}")
 
-    query = "SELECT ID_Aluno, Nome_Aluno, Senha FROM Alunos WHERE Email = %s"
-    aluno = executar_query(query, (email,), fetch=True)
+    query = "SELECT ID_Aluno, Nome_Aluno, Senha FROM Alunos WHERE Email = %s "
+    aluno = executar_query(query, (email), fetch=True)
 
     if aluno:
         id_aluno, nome_aluno, senha_hash = aluno[0]
@@ -99,6 +99,7 @@ def login_aluno():
 
             from Alunos.menu_aluno import menu_aluno
             menu_aluno(id_aluno)
+            
         else:
             print("\nSenha incorreta.")
             input("Pressione ENTER para continuar...")

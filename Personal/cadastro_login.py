@@ -1,5 +1,5 @@
 # =========================
-# CADASTRO E LOGIN DO PERSONAL
+# CADASTRO E LOGIN DO PERSONAL (Instrutores)
 # =========================
 
 import os

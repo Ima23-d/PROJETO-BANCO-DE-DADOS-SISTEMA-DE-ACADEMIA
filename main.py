@@ -24,11 +24,11 @@ def menu_principal():
             input("Pressione ENTER para continuar...")
             continue 
 
-        if opcao == "1":
+        if opcao == 1:
             menu_aluno_principal()
-        elif opcao == "2":
+        elif opcao == 2:
             menu_personal_principal()
-        elif opcao == "3":
+        elif opcao ==  3:
             print("\nSaindo do sistema...")
             break
         else:
