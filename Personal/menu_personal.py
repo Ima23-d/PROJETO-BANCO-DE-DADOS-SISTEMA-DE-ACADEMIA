@@ -80,7 +80,13 @@ def menu_personal(id_personal):
         print("2 - Cadastrar treino")
         print("3 - Ver todos os treinos")
         print("4 - Voltar")
-        opcao = input("Escolha: ").strip()
+   
+        try:
+            opcao = int(input("Escolha: "))
+        except ValueError as e:
+            print(f"\nValor inválido! Digite um número entre 1 e 3. ({e})")
+            input("Pressione ENTER para continuar...")
+            continue 
 
         if opcao == "1":
             ver_alunos_personal()
@@ -89,6 +95,8 @@ def menu_personal(id_personal):
         elif opcao == "3":
             ver_treinos_alunos_personal()
         elif opcao == "4":
+            print("\nVoltando ao menu anterior...")
+            input("Pressione ENTER para continuar...")
             break
         else:
             print("Opção inválida.")
@@ -101,13 +109,21 @@ def menu_personal_principal():
         print("1 - Cadastrar")
         print("2 - Login")
         print("3 - Voltar")
-        opcao = input("Escolha: ").strip()
+
+        try:
+            opcao = int(input("Escolha: "))
+        except ValueError as e:
+            print(f"\nValor inválido! Digite um número entre 1 e 3. ({e})")
+            input("Pressione ENTER para continuar...")
+            continue 
 
         if opcao == "1":
             cadastrar_personal()
         elif opcao == "2":
             login_personal()
         elif opcao == "3":
+            print("\nVoltando ao menu anterior...")
+            input("Pressione ENTER para continuar...")
             break
         else:
             print("Opção inválida.")
