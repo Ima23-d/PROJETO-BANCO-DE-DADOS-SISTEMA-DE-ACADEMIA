@@ -1,5 +1,5 @@
 # =========================
-# FUNÇÃO EXECUTAR QUERY (CORRIGIDA)
+# FUNÇÃO EXECUTAR QUERY 
 # =========================
 
 from config.config import conectar
