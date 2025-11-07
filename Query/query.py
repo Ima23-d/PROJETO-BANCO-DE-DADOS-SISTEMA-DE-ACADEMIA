@@ -1,5 +1,5 @@
 # =========================
-# FUNÇÃO EXECUTAR QUERY (CORRIGIDA)
+# FUNÇÃO EXECUTAR QUERY
 # =========================
 
 from config.config import conectar
@@ -33,3 +33,4 @@ def executar_query(query, params=None, fetch=False):
             cursor.close()
         if conn:
             conn.close()
+
