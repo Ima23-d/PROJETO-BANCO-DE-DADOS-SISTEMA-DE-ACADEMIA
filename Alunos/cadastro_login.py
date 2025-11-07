@@ -1,5 +1,5 @@
 # =========================
-# CADASTRO E LOGIN DO ALUNO (versão segura)
+# CADASTRO E LOGIN DO ALUNO
 # =========================
 
 import os
@@ -17,18 +17,19 @@ def limpar_tela():
     os.system("cls" if os.name == "nt" else "clear")
 
 
-def criptografar(password: str) -> bytes:
+def criptografar(password: str) -> str:
     """Criptografa uma senha em texto puro usando bcrypt."""
     senha_bytes = password.encode("utf-8")
     salt = bcrypt.gensalt()
     hashed = bcrypt.hashpw(senha_bytes, salt)
-    return hashed
+    return hashed.decode("utf-8")
 
 
-def checar_password(password: str, hashed: bytes) -> bool:
+def checar_password(password: str, hashed: str) -> bool:
     """Verifica se a senha informada corresponde ao hash salvo."""
     senha_bytes = password.encode("utf-8")
-    return bcrypt.checkpw(senha_bytes, hashed)
+    hashed_bytes = hashed.encode("utf-8")
+    return bcrypt.checkpw(senha_bytes, hashed_bytes)
 
 
 # -------------------------
@@ -42,7 +43,6 @@ def cadastrar_aluno():
     try:
         nome = input("Nome: ").strip()
         cpf = input("CPF: ").strip()
-        data_nasc = input("Data de Nascimento (YYYY-MM-DD): ").strip()
         idade = int(input("Idade: ").strip())
         peso = float(input("Peso (kg): ").strip())
         gordura = float(input("Gordura corporal (%): ").strip())
@@ -60,15 +60,17 @@ def cadastrar_aluno():
 
     query = """
         INSERT INTO alunos
-        (nome_aluno, cpf, data_nascimento, idade, peso, gordura_corporal,
-        nivel, deficiencia, email, sexo, senha)
-        VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)
+        (nome_aluno, cpf, idade, peso, gordura_corporal,
+         nivel, deficiencia, email, sexo, senha)
+        VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)
         RETURNING id_aluno
     """
 
     res = executar_query(
-        query, (nome, cpf, data_nasc, idade, peso, gordura,
-                nivel, deficiencia, email, sexo, senha_hash), fetch=True
+        query,
+        (nome, cpf, idade, peso, gordura,
+         nivel, deficiencia, email, sexo, senha_hash),
+        fetch=True
     )
 
     if res:
@@ -86,20 +88,24 @@ def login_aluno():
         email = input("Email: ").strip()
         senha = pwinput.pwinput(prompt="Senha: ", mask="*").strip()
     except Exception as e:
-        print("Digite um valor valido {e}")
+        print(f"Erro na entrada: {e}")
+        input("Pressione ENTER para continuar...")
+        return
 
-    query = "SELECT ID_Aluno, Nome_Aluno, Senha FROM Alunos WHERE Email = %s "
-    aluno = executar_query(query, (email), fetch=True)
+    query = "SELECT id_aluno, nome_aluno, senha FROM alunos WHERE email = %s"
+    aluno = executar_query(query, (email,), fetch=True) 
 
     if aluno:
         id_aluno, nome_aluno, senha_hash = aluno[0]
-        if checar_password(senha, senha_hash.encode('utf-8')):
+
+
+        if checar_password(senha, senha_hash):
             print(f"\nBem-vindo(a), {nome_aluno}!")
             input("Pressione ENTER para continuar...")
 
             from Alunos.menu_aluno import menu_aluno
             menu_aluno(id_aluno)
-            
+
         else:
             print("\nSenha incorreta.")
             input("Pressione ENTER para continuar...")
