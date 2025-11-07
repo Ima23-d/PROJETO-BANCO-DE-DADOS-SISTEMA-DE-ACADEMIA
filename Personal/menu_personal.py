@@ -86,26 +86,46 @@ def deletar_treino():
 
 
 
-def ver_treinos_alunos_personal():
+def ver_treinos_alunos_personal(id_aluno=None):
     limpar_tela()
+
+    if id_aluno is None:
+        try:
+            id_aluno = int(input("Digite o ID do aluno para ver os treinos: ").strip())
+        except ValueError:
+            print("ID inválido.")
+            input("Pressione ENTER para voltar...")
+            return
     query = """
-        SELECT id_treinos, especificacoes, nome
-        FROM treinos
-        JOIN instrutores ON treinos.id_instrutor = instrutores.id_instrutor
-        JOIN treinos_alunos ON treinos.id_treinos = treinos_alunos.id_treinos
-        WHERE treinos_alunos.id_aluno = %s
+        SELECT 
+            t.id_treinos, 
+            t.especificacoes, 
+            i.nome AS nome_instrutor
+        FROM treinos t
+        JOIN instrutores i ON t.id_instrutor = i.id_instrutor
+        JOIN treinos_alunos ta ON t.id_treinos = ta.id_treinos
+        WHERE ta.id_aluno = %s
     """
-    resultados = executar_query(query, fetch=True)
+    resultados = executar_query(query, (id_aluno,), fetch=True)
 
     print("--- TREINOS CADASTRADOS ---")
     if resultados is None:
         print("Erro ao buscar treinos (verifique o banco).")
     elif not resultados:
-        print("Nenhum treino registrado.")
+        print("Nenhum treino registrado para este aluno.")
     else:
-        for r in resultados:
-            print(f"\nTreino #{r[1]} | Aluno: {r[0]} | Instrutor: {r[3]}\nDescrição: {r[2]}")
+        for treino in resultados:
+            id_treino = treino[0]
+            especificacoes = treino[1]
+            nome_instrutor = treino[2]
+
+            print(f"\n📋 Treino #{id_treino}")
+            print(f"🏋️ Instrutor: {nome_instrutor}")
+            print(f"📝 Especificações: {especificacoes}")
+            print("-" * 40)
+
     input("\nPressione ENTER para voltar...")
+
 
 
 
