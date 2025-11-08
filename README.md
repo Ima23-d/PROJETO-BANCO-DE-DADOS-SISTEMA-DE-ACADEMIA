@@ -13,3 +13,4 @@ nesse sistema tbm tem a parte do menu do aluno, onde mostra os treinos do aluno 
 o sistema da academia obviamente também tem os dados dos personais, onde mostra os treinos que o personal tem que criar, os alunos desse personal e entre outras informações
 
 
+
