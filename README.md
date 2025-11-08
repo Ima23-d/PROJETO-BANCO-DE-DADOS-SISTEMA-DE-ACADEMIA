@@ -2,7 +2,9 @@
 
 **Projeto:** Sistema para Gestão de Academia  
 **Autores:** Arthur Franco, Felipe Torres, Vinícius Nascimento  
-**Instituição:** CESMAC  
+**Instituição:** CESMAC
+**Disciplina:** Progamação 2 | Banco de Dados
+**Professores** Tacyana, Wagner
 **Repositório:** [Ima23-d/PROJETO-BANCO-DE-DADOS-SISTEMA-DE-ACADEMIA](https://github.com/Ima23-d/PROJETO-BANCO-DE-DADOS-SISTEMA-DE-ACADEMIA)
 
 ---
@@ -187,5 +189,6 @@ Execute os scripts SQL de criação das tabelas, se necessário.
 Execute o sistema
 
 python main.py
+
 
 
