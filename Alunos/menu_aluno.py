@@ -15,8 +15,14 @@ def ver_treinos_aluno(id_aluno):
     limpar_tela()
     print("--- SEUS TREINOS ---")
 
+#O erro estava aqui no Query, o erro que dava era que o id_treinos estava ambiguo, ou seja, ele não sabia de onde 
+#era o id_treinos pra puxar do banco de dados, então lembrei que em uma das ultimas aulas de banco de dados
+#o Franco utilizando o pgadmin especificava onde ficava cada coluna em sua respectiva tabela 
+#Exemplo: SELECT treinos.id_treinos, o "treinos." é pra indicar que é da tabela treinos, treinos.especificacoes 
+#da tabela treinos e instrutores.nome da tabela de instrutores
+
     query = """
-        SELECT id_treinos, especificacoes, nome
+        SELECT treinos.id_treinos, treinos.especificacoes, instrutores.nome
         FROM treinos
         JOIN instrutores ON treinos.id_instrutor = instrutores.id_instrutor
         JOIN treinos_alunos ON treinos.id_treinos = treinos_alunos.id_treinos
@@ -132,3 +138,4 @@ def menu_aluno_principal():
         else:
             print("Opção inválida.")
             input("Pressione ENTER para continuar...")
+
