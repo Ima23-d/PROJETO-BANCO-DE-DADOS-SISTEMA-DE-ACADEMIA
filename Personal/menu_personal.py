@@ -97,15 +97,16 @@ def ver_treinos_alunos_personal(id_aluno=None):
             input("Pressione ENTER para voltar...")
             return
     query = """
-        SELECT 
-            t.id_treinos, 
-            t.especificacoes, 
-            i.nome AS nome_instrutor
-        FROM treinos t
-        JOIN instrutores i ON t.id_instrutor = i.id_instrutor
-        JOIN treinos_alunos ta ON t.id_treinos = ta.id_treinos
-        WHERE ta.id_aluno = %s
+    SELECT 
+        treinos.id_treinos, 
+        treinos.especificacoes, 
+        instrutores.nome AS nome_instrutor
+    FROM treinos
+    JOIN instrutores ON treinos.id_instrutor = instrutores.id_instrutor
+    JOIN treinos_alunos ON treinos.id_treinos = treinos_alunos.id_treinos
+    WHERE treinos_alunos.id_aluno = %s
     """
+
     resultados = executar_query(query, (id_aluno,), fetch=True)
 
     print("--- TREINOS CADASTRADOS ---")
@@ -192,3 +193,4 @@ def menu_personal_principal():
         else:
             print("Opção inválida.")
             input("Pressione ENTER para continuar...")
+
