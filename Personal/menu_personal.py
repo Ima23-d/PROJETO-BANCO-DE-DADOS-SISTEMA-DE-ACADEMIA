@@ -2,6 +2,7 @@
 # MENU DO PERSONAL (CRUD)
 # =========================
 
+
 import os
 from Query.query import executar_query
 from Personal.cadastro_login import cadastrar_personal, login_personal
@@ -25,14 +26,15 @@ def ver_alunos_personal():
             print(f"ID: {a[0]} | Nome: {a[1]} | Email: {a[2]}")
     input("\nPressione ENTER para voltar...")
 
-
+#Trocamos o nome da variavel para buscar_aluno e definimos como 'str' ao invés de 'int'
 def cadastrar_treino():
     limpar_tela()
     try:
         id_instrutor = int(input("ID do Instrutor: ").strip())
-        id_aluno = int(input("ID do Aluno: ").strip())
+        buscar_aluno = str(input("Nome do Aluno: ").strip())
     except ValueError:
-        print("IDs devem ser números inteiros.")
+        print("ID's devem ser números inteiros.")
+        print("O nome do aluno tem que estar cadastrado.")
         input("Pressione ENTER para voltar...")
         return
 
@@ -50,9 +52,31 @@ def cadastrar_treino():
         return
 
     treino_id = res1[0][0]
-    executar_query("INSERT INTO treinos_alunos (id_aluno, id_treinos) VALUES (%s, %s)", (id_aluno, treino_id))
+    #fizemos uma alteração depois de muita pesquisa de como iriamos transferir a busca pelo aluno de ID
+    #para nome, e chegamos a conclusão de substituir essa parte inferior que era o código antigo
+    #executar_query("SELECT FROM alunos WHERE nome_aluno = %s", (buscar_aluno))
+    #executar_query("INSERT INTO treinos_alunos (id_aluno, id_treinos) VALUES (%s, %s)", (id_aluno, treino_id))
+    #por um sql_buscar o id do aluno onde o nome do aluno seria como o inserido na variavel buscar_aluno
+    #fazendo assim uma pequena burlada pois ele ainda está usando o código de id_do aluno na tabela e 
+    #na busca, só que, ao invés do usuário digitar o id do aluno, ele vai digitar o nome, o código irá
+    #buscar o nome, e vai pegar o id do aluno que tem esse nome e vai seguir normalmente
+    sql_buscar = "SELECT id_aluno FROM alunos WHERE nome_aluno ILIKE %s"
+    resultado = executar_query(sql_buscar, (buscar_aluno,), fetch=True)
+
+
+    if not resultado:
+        print("\nAluno não encontrado!")
+        input("\nPressione ENTER para voltar...")
+        return
+
+    id_aluno = resultado[0][0]  
+
+
+    sql_insert = "INSERT INTO treinos_alunos (id_aluno, id_treinos) VALUES (%s, %s)"
+    executar_query(sql_insert, (id_aluno, treino_id))
     print("\nTreino cadastrado com sucesso!")
     input("\nPressione ENTER para voltar...")
+
 
 def editar_treino():
     limpar_tela()
@@ -85,17 +109,26 @@ def deletar_treino():
     input("\nPressione ENTER para voltar...")
 
 
-
-def ver_treinos_alunos_personal(id_aluno=None):
+#Aqui as mudanças foram basicamente as mesmas de lá de cima, somente modificamos o jeito de busca para
+#sql_buscar_alunos para SELECT o id do aluno onde o nome do aluno for como o nome digitado pelo personal
+#e adicionamos o id_aluno = resultado_aluno[0][0] por que era necessário utilizar uma tupla
+#(pelo menos pelo que a gente pesquisou era o unico jeito de se fazer sem precisar alterar nada das tabelas)
+def ver_treinos_alunos_personal(nome_aluno=None):
     limpar_tela()
 
-    if id_aluno is None:
+    if nome_aluno is None:
         try:
-            id_aluno = int(input("Digite o ID do aluno para ver os treinos: ").strip())
+            nome_aluno = str(input("Digite o nome do aluno para ver os treinos: ").strip())
+            sql_buscar_aluno = "SELECT id_aluno FROM alunos WHERE nome_aluno ILIKE %s"
+            resultado_aluno = executar_query(sql_buscar_aluno, (f"%{nome_aluno}%",), fetch=True)
         except ValueError:
-            print("ID inválido.")
+            print("Nome inválido.")
             input("Pressione ENTER para voltar...")
             return
+        
+
+    id_aluno = resultado_aluno[0][0]
+
     query = """
     SELECT 
         treinos.id_treinos, 
@@ -126,8 +159,6 @@ def ver_treinos_alunos_personal(id_aluno=None):
             print("-" * 40)
 
     input("\nPressione ENTER para voltar...")
-
-
 
 
 def menu_personal(id_personal):
@@ -193,4 +224,3 @@ def menu_personal_principal():
         else:
             print("Opção inválida.")
             input("Pressione ENTER para continuar...")
-
