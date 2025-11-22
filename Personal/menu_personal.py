@@ -212,7 +212,7 @@ def menu_personal_principal():
             print("\nValor inválido! Digite 1, 2 ou 3.")
             input("Pressione ENTER para continuar...")
             continue
-
+        #poderia user o match case
         if opcao == 1:
             cadastrar_personal()
         elif opcao == 2:
@@ -224,3 +224,4 @@ def menu_personal_principal():
         else:
             print("Opção inválida.")
             input("Pressione ENTER para continuar...")
+
