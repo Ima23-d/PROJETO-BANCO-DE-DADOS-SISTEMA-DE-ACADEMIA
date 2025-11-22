@@ -26,15 +26,15 @@ CREATE TABLE instrutores (
     senha VARCHAR(100) NOT NULL
 );
 
--- ===================================
--- TABELA: PLANOS
--- ===================================
-CREATE TABLE planos (
-    id_planos SERIAL PRIMARY KEY,
-    nome_plano VARCHAR(100) NOT NULL,
-    descricao TEXT,
-    valor DECIMAL(10,2) NOT NULL
-);
+-- -- ===================================
+-- -- TABELA: PLANOS
+-- -- ===================================
+-- CREATE TABLE planos (
+--     id_planos SERIAL PRIMARY KEY,
+--     nome_plano VARCHAR(100) NOT NULL,
+--     descricao TEXT,
+--     valor DECIMAL(10,2) NOT NULL
+-- );
 
 -- ===================================
 -- TABELA: TREINOS
@@ -57,13 +57,13 @@ CREATE TABLE treinos_alunos (
     FOREIGN KEY (id_treinos) REFERENCES treinos(id_treinos)
 );
 
--- ===================================
--- TABELA: ESCOLHE
--- ===================================
-CREATE TABLE escolhe (
-    id_aluno INT NOT NULL,
-    id_planos INT NOT NULL,
-    PRIMARY KEY (id_aluno, id_planos),
-    FOREIGN KEY (id_aluno) REFERENCES alunos(id_aluno),
-    FOREIGN KEY (id_planos) REFERENCES planos(id_planos)
-);
+-- -- ===================================
+-- -- TABELA: ESCOLHE
+-- -- ===================================
+-- CREATE TABLE escolhe (
+--     id_aluno INT NOT NULL,
+--     id_planos INT NOT NULL,
+--     PRIMARY KEY (id_aluno, id_planos),
+--     FOREIGN KEY (id_aluno) REFERENCES alunos(id_aluno),
+--     FOREIGN KEY (id_planos) REFERENCES planos(id_planos)
+-- );
