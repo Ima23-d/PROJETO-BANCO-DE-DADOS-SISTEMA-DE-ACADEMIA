@@ -2,22 +2,6 @@ psycopg2
 pwinput
 os
 dotenv
-
 bcrypt
 
-BANCO DE DADOS RENDER
-.env:
-DB_NAME="dbname_e3lt"
-DB_HOST="dpg-d480cvm3jp1c73c9k250-a.oregon-postgres.render.com"
-DB_USER="dbname_e3lt_user"
-DB_PASSWORD="vPmDRTu9lr6E5OsZHHeODf4jhQngkkKs"
-DB_PORT="5432"
-
-| Campo        | Valor                                                   |
-| ------------ | ------------------------------------------------------- |
-| **Host**     | `dpg-d480cvm3jp1c73c9k250-a.oregon-postgres.render.com` |
-| **Database** | `dbname_e3lt`                                           |
-| **User**     | `dbname_e3lt_user`                                      |
-| **Password** | `vPmDRTu9lr6E5OsZHHeODf4jhQngkkKs`                      |
-| **Port**     | `5432`                                                  |
 
